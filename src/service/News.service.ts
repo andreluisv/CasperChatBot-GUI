@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class NewsService {
   constructor(private http: HttpClient) { }
   private headers = new HttpHeaders({'Content-Type': 'application/json'});
-  private pathUrl = 'http://localhost:3333/';
+  private pathUrl = 'https://casperchatbotapialpvj.herokuapp.com/';
   private prefixRequest = 'news/';
 
   public getNewsByTheme(theme:string): Observable<any> {
