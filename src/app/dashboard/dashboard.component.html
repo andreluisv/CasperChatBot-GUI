@@ -1,39 +1,43 @@
-<button id="fixedbutton" class="plus-button plus-button--large" (click)="openModal(content);this.selectedNews={};this.selectedNews.update=false;"></button>
+<div *ngIf="isAuth">
+  <button id="fixedbutton" class="plus-button plus-button--large"
+    (click)="openModal(content);this.selectedNews={};this.selectedNews.update=false;"></button>
 
-<div>
+  <div>
     <div ngbDropdown class="d-inline-block">
-        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Select Theme</button>
-        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button *ngFor="let theme of themeOptions" ngbDropdownItem (click)="getNewsByTheme(theme)">{{theme}}</button>
-        </div>
+      <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Select Theme</button>
+      <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+        <button *ngFor="let theme of themeOptions" ngbDropdownItem (click)="getNewsByTheme(theme)">{{theme}}</button>
+      </div>
     </div>
     <h1>
-        {{selectedTheme}}
+      {{selectedTheme}}
     </h1>
     <table class="table table-striped">
-        <thead>
+      <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">Title</th>
           <th scope="col">Theme</th>
           <th scope="col">Action</th>
         </tr>
-        </thead>
-        <tbody>
+      </thead>
+      <tbody>
         <tr *ngFor="let news of allNews; index as i">
           <th scope="row">{{ i + 1 }}</th>
           <td>{{ news.title }}</td>
           <td>{{ news.theme }}</td>
           <td>
-              <button type="button" class="btn btn-outline-success btn-rounded waves-effect" (click)="updateSelectedNews(news);openModal(content)">Edit</button>
-              <button type="button" class="btn btn-outline-danger btn-rounded waves-effect" (click)="deleteNewsById(news._id)">Delete</button>
+            <button type="button" class="btn btn-outline-success btn-rounded waves-effect"
+              (click)="updateSelectedNews(news);openModal(content)">Edit</button>
+            <button type="button" class="btn btn-outline-danger btn-rounded waves-effect"
+              (click)="deleteNewsById(news._id)">Delete</button>
           </td>
         </tr>
-        </tbody>
-      </table>
-</div>
+      </tbody>
+    </table>
+  </div>
 
-<ng-template #content let-c="close" let-d="dismiss">
+  <ng-template #content let-c="close" let-d="dismiss">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Edit News</h4>
       <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
@@ -46,7 +50,8 @@
       <label for="title" class="">Title</label>
       <input mdbInput type="text" name="title" [(ngModel)]="selectedNews.title" id="title" class="form-control">
       <label for="description" class="">Description</label>
-      <input mdbInput type="text" name="description" [(ngModel)]="selectedNews.description" id="description" class="form-control">
+      <input mdbInput type="text" name="description" [(ngModel)]="selectedNews.description" id="description"
+        class="form-control">
       <label for="link" class="">News Link</label>
       <input mdbInput type="text" name="link" [(ngModel)]="selectedNews.link" id="link" class="form-control">
       <select [(ngModel)]="selectedNews.theme">
@@ -54,7 +59,16 @@
       </select>
     </div>
     <div class="modal-footer">
-      <button *ngIf="selectedNews.update" type="button" class="btn btn-outline-dark" (click)="c('Save click'); updateNewsById()">Save</button>
-      <button *ngIf="!selectedNews.update && selectedNews.theme" type="button" class="btn btn-outline-dark" (click)="c('Save click'); createNewsByModal()">Create</button>
+      <button *ngIf="selectedNews.update" type="button" class="btn btn-outline-dark"
+        (click)="c('Save click'); updateNewsById()">Save</button>
+      <button *ngIf="!selectedNews.update && selectedNews.theme" type="button" class="btn btn-outline-dark"
+        (click)="c('Save click'); createNewsByModal()">Create</button>
     </div>
   </ng-template>
+</div>
+
+<div *ngIf="!isAuth">
+  <a href="/auth">
+    <p>not authenticated, click me!</p>
+  </a>
+</div>

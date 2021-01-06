@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
     id: "",
     update: true
   };
+  isAuth: boolean = false;
 
   constructor(config: NgbModalConfig, private modalService: NgbModal, private news : NewsService) {
     config.backdrop = 'static';
@@ -29,6 +30,11 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    var data = localStorage.getItem("user");
+    this.isAuth = data=="ok";
+    if (!this.isAuth){
+      window.location.href="/auth";
+    }
   }
 
   createNewsByModal():void{
